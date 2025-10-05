@@ -2,43 +2,78 @@ import java.util.Scanner;
 
 public class Calculator {
 
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
+	private int addition(int i, int j) {
+		return (i+j);
+	}
 
-		System.out.println("enter first number :");
-		int num1 = scanner.nextInt();         //here you can enter first number
-		System.out.println("enter second number :");
-		int num2 = scanner.nextInt();         //here you can enter second number
-		System.out.println("enter the operator(+, -, *, /):");
-		String operation = scanner.next();    //here you can enter the operator(Which  mathmatical operation you want to perform)
+	private int subtraction(int i, int j) {
+		return (i-j);
+	}
 
-		switch(operation) {
-		case "+" :
-			int add = num1+num2;   
-			System.out.println(add);
-			break;
-		case "-" :
-			int sub = num1-num2;
-			System.out.println(sub);
-			break;
-		case "*" :
-			int mul = num1 * num2;
-			System.out.println(mul);
-			break;
-		case "/" :
-			if(num2 != 0) {
-				System.out.println((double)num1/num2);
-			} else {
-				System.out.println("Error: Division by zero is not allowed.");
-			}
-			break;
+	private int multiplication(int i, int j) {
+		return (i*j);
+	}
 
-		default :     //if you enter the any key other than +, -, *, / then you cannot perform mathmatical operation
-			System.out.println("Cannot calculate the answer please enter (+, -, *,/)");
-
+	private void division(int i, int j) {
+		if(j == 0) {
+			System.out.println("Cannot divide by 0");
+		} else {
+			System.out.println("result: " + (double)i/j);
 		}
-		scanner.close();
+	}
 
+	private double power(int i, int j) { 
+		return Math.pow(i, j);
+	}
+
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		Calculator calculate = new Calculator();
+
+		System.out.println("Enter \"end\" to stop\nyou have to enter in the following manner 4, 5, +");
+		while(true) {     // we can exit loop by entering "end" word
+			String value = input.next();
+
+			if(value.equals("end")){
+				break;
+			}
+
+			try {
+				int i = Integer.valueOf(value);//here we convert string value to integer
+
+				int j = input.nextInt();
+				System.out.println("Enter the operation you want to perform (+,-,*,/,^): ");
+				String operation = input.next();
+
+				switch(operation) {
+				case "+":
+					System.out.println("result: " + calculate.addition(i, j));
+					break;
+
+				case "-":
+					System.out.println("result: " + calculate.subtraction(i, j));
+					break;
+
+				case "*":
+					System.out.println("result: " + calculate.multiplication(i, j));
+					break;
+
+				case "/":
+					calculate.division(i, j);
+					break;
+
+				case "^":
+					System.out.println("result: " + calculate.power(i, j));
+					break;
+
+				default:
+					System.out.println("calculation is not possible");
+				}
+			} catch(Exception e) {
+				System.out.println("Enter a valid number");
+			}
+		}
+		input.close();
 	}
 
 }
